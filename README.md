@@ -2,7 +2,7 @@
 A python module for using Luogu Api.
 一个用于洛谷API的的Python模块。
 
-** 如何使用 **
+**如何使用**
 
 首先，你需要使用`pip install pyluog`来安装本模块，然后再进行引用：
 
@@ -55,6 +55,7 @@ a=pyluog.loginWithCookie('aaabbcc1233dd344ee','12345')
 
 - a.getLastCode('P1001') 获取你指定题目最后一次提交的代码
 
+- a.getMyPastes() 获取你发布的所有云剪贴板信息
 
 以上操作均会返回一个json对象。
 

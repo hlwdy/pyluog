@@ -84,7 +84,7 @@ class User:
         r=s.get('https://www.luogu.com.cn/user/notification?type='+str(typ)+'&page='+str(page)+'&_contentOnly=1',headers=headers)
         return (r.json()['currentData']['notifications'])
         
-    def QianDao():
+    def QianDao(self):
         s=self.sess
         if(not s):
             print('请先登录!')
@@ -127,6 +127,14 @@ class User:
         r=s.get('https://www.luogu.com.cn/problem/'+pid,headers=headers)
         res=json.loads(unquote(re.findall('JSON.parse\(decodeURIComponent\("(.*?)"\)\);',r.text)[0]))['currentData']
         return {'lastLanguage':res['lastLanguage'],'lastCode':res['lastCode']}
+
+    def getMyPastes(self):
+        s=self.sess
+        if(not s):
+            print('请先登录!')
+            return
+        r=s.get('https://www.luogu.com.cn/paste?_contentOnly=1',headers=headers)
+        return r.json()['currentData']['pastes']
     
 def getUid(name):
     r=requests.get('https://www.luogu.com.cn/api/user/search?keyword='+name,headers=headers).json()
