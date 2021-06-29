@@ -17,6 +17,9 @@ class User:
     name=''
     password=''
     sess=None
+    client_id_=''
+    uid=''
+    
     def __init__(self,name,password):
         self.name=name
         self.password=password
@@ -31,6 +34,8 @@ class User:
         headers['x-csrf-token']=csrf_token
         print('获取验证码...')
         r=s.get('https://www.luogu.com.cn/api/verify/captcha',headers=headers)
+        plt.figure(num='captcha')
+        plt.title('Please identify and remember the verification code.')
         plt.imshow(Image.open(io.BytesIO(r.content)))
         plt.axis('off')
         plt.show()
@@ -53,8 +58,11 @@ class User:
         print('Token获取成功!')
         data={'syncToken':tk}
         r=s.post('https://www.luogu.org/api/auth/syncLogin',headers=headers,data=json.dumps(data))
-        print(r.cookies)
+        cookies_list=r.cookies.get_dict()
+        print(cookies_list)
         self.sess=s
+        self.client_id_=cookies_list['__client_id']
+        self.uid=cookies_list['_uid']
         print('登录成功!')
         print('用户名: '+self.name)
         headers['x-csrf-token']=''
@@ -156,8 +164,12 @@ def loginWithCookie(client_id,uid):
     requests.utils.add_dict_to_cookiejar(s.cookies,{'__client_id':client_id,'_uid':str(uid)})
     res=User('*','*')
     res.sess=s
+    res.client_id_=client_id
+    res.uid=uid
     print('验证cookie有效性...')
-    if(res.getUserData()):
+    mydata=res.getUserData()
+    if(mydata):
+        res.name=mydata['name']
         print('登录成功!')
         print('用户uid: '+uid)
         return res

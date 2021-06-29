@@ -5,7 +5,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='pyluog',
-    version='0.13.8',
+    version='0.13.9',
     description='A python module for using Luogu Api.',
     url='https://pypi.org/project/pyluog',
     long_description=long_description,

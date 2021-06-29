@@ -2,23 +2,38 @@
 A python module for using Luogu Api.
 一个用于洛谷API的的Python模块。
 
+Github: https://github.com/hlwdy/pyluog
+
 **如何使用**
 
 首先，你需要使用`pip install pyluog`来安装本模块，然后再进行引用：
 
-```
+```python
 import pyluog
 ```
 
-你可以定义一个账号变量，需要两个字符串参数，分别是账号密码：
+User类型属性：
 
-```
+- name 当前账号的用户名
+
+- password 当前账号的密码，如果通过非账号密码登录方式登录，则该属性值为'*'
+
+- sess 当前账号的session会话对象 (requests的Session类)
+
+- client_id_ 当前账号的__client_id
+
+- uid 当前账号的uid
+
+
+你可以定义一个User类型的账号变量，需要两个字符串参数，分别是账号密码：
+
+```python
 a=pyluog.User('name','password')
 ```
 
 注意，以上操作并没有进行登录，登录操作需要执行：
 
-```
+```python
 a.login()
 ```
 
@@ -28,9 +43,11 @@ a.login()
 
 除此之外，你还可以使用cookie进行登录 (两个参数，__client_id和你的uid)：
 
-```
+```python
 a=pyluog.loginWithCookie('aaabbcc1233dd344ee','12345')
 ```
+
+这将返回一个登录过的User对象给变量a (cookie需要校验)。
 
 登录操作完成后，你可以用：
 
